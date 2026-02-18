@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # 1. Instalar dependencias que faltaban en Colab (para asegurar)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libtool libtool-bin autoconf automake
+
+      # 2. Construir la APK usando la acción de Buildozer
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: stable
+
+      # 3. Subir el resultado para que lo descargues
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake-game-apk
+          path: bin/*.apk
