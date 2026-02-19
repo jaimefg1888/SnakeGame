@@ -15,12 +15,12 @@ jobs:
         with:
           python-version: '3.10'
 
-      # 1. Instalar dependencias del sistema (las mismas que daban guerra en Colab)
+      # 1. Instalar dependencias del sistema (AÑADIDO libltdl-dev)
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential libtool libtool-bin autoconf automake \
+            build-essential libtool libtool-bin autoconf automake libltdl-dev \
             libffi-dev libssl-dev python3-dev \
             libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
             libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
@@ -33,10 +33,10 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython==0.29.33
 
-      # 3. Construir la APK (aceptando licencias automáticamente)
+      # 3. Construir la APK (Sin 'yes |' porque ya está en el spec)
       - name: Build APK
         run: |
-          yes | buildozer android debug
+          buildozer android debug
 
       # 4. Subir el resultado
       - name: Upload APK
