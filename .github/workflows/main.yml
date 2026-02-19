@@ -8,23 +8,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      # 1. Instalar dependencias que faltaban en Colab (para asegurar)
-      - name: Install dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # 1. Instalar dependencias del sistema (las mismas que daban guerra en Colab)
+      - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libtool libtool-bin autoconf automake
+          sudo apt-get install -y \
+            build-essential libtool libtool-bin autoconf automake \
+            libffi-dev libssl-dev python3-dev \
+            libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
+            zlib1g-dev openjdk-17-jdk unzip zip \
+            libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
 
-      # 2. Construir la APK usando la acción de Buildozer
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          command: buildozer android debug
-          buildozer_version: stable
+      # 2. Instalar Buildozer
+      - name: Install Buildozer
+        run: |
+          pip install --upgrade pip
+          pip install buildozer cython==0.29.33
 
-      # 3. Subir el resultado para que lo descargues
+      # 3. Construir la APK (aceptando licencias automáticamente)
+      - name: Build APK
+        run: |
+          yes | buildozer android debug
+
+      # 4. Subir el resultado
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
