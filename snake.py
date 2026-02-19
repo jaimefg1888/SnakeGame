@@ -3,7 +3,7 @@ import random
 import sys
 
 pygame.init()
-
+   
 ANCHO = 600
 ALTO = 460
 TAMANO_CUADRO = 20
