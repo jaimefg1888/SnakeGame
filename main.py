@@ -1,4 +1,3 @@
-import os
 import sys
 import random
 
@@ -30,21 +29,12 @@ pantalla = pygame.display.set_mode((ANCHO, ALTO))
 pygame.display.set_caption('SnakeGame by jaimefg1888')
 reloj = pygame.time.Clock()
 
-# Fuente personalizada con fallback al sistema
-ruta_fuente = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'DotGothic16-Regular.ttf')
-if not os.path.exists(ruta_fuente):
-    ruta_fuente = '/tmp/DotGothic16-Regular.ttf'
-
-try:
-    fuente        = pygame.font.Font(ruta_fuente, 28)
-    fuente_grande = pygame.font.Font(ruta_fuente, 48)
-    fuente_pequena = pygame.font.Font(ruta_fuente, 20)
-    fuente_titulo = pygame.font.Font(ruta_fuente, 64)
-except Exception:
-    fuente        = pygame.font.Font(None, 28)
-    fuente_grande = pygame.font.Font(None, 56)
-    fuente_pequena = pygame.font.Font(None, 24)
-    fuente_titulo = pygame.font.Font(None, 72)
+# Fuente del sistema (None = fuente por defecto de pygame)
+# Para usar una fuente personalizada: pygame.font.Font('DotGothic16-Regular.ttf', tamaño)
+fuente         = pygame.font.Font(None, 28)
+fuente_grande  = pygame.font.Font(None, 56)
+fuente_pequena = pygame.font.Font(None, 24)
+fuente_titulo  = pygame.font.Font(None, 72)
 
 
 # --- Clases de UI ---
