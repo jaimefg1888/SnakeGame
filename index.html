@@ -54,7 +54,7 @@
   .canvas-wrap{position:relative;width:100%;aspect-ratio:1;max-width:480px;background:var(--surface);border:2px solid var(--border);overflow:hidden;}
   .canvas-wrap::before{
     content:'';position:absolute;inset:0;
-    background-image:linear-gradient(rgba(0,255,136,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.012) 1px,transparent 1px);
+    background-image:linear-gradient(rgba(0,255,136,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.07) 1px,transparent 1px);
     background-size:calc(100%/20) calc(100%/20);pointer-events:none;z-index:1;
   }
   canvas{display:block;width:100%;height:100%;image-rendering:pixelated;}
@@ -200,6 +200,11 @@
 
     <!-- START -->
     <div class="overlay" id="startScreen">
+      <div class="lang-row">
+        <button class="lang-btn active" id="langES">🇪🇸 ES</button>
+        <button class="lang-btn" id="langEN">🇬🇧 EN</button>
+      </div>
+
       <div class="ov-title">🐍 SNAKE</div>
 
       <div class="speed-selector">
@@ -215,14 +220,8 @@
         </div>
       </div>
 
-      <div class="lang-row">
-        <button class="lang-btn active" id="langES">🇪🇸 ES</button>
-        <button class="lang-btn" id="langEN">🇬🇧 EN</button>
-      </div>
-
       <button class="btn" id="startBtn" data-i18n="start">▶ COMENZAR</button>
       <button class="btn yellow sm" id="rankingBtn" data-i18n="ranking_btn">🏆 RANKING</button>
-      <div class="hiscore-line" id="hiScoreWrap">MEJOR: <span id="hiScoreDisplay">0</span></div>
     </div>
 
     <!-- PAUSE -->
@@ -314,9 +313,7 @@ function applyLang() {
   document.getElementById('nameInput').placeholder = t('name_placeholder');
   document.getElementById('langES').classList.toggle('active', lang==='es');
   document.getElementById('langEN').classList.toggle('active', lang==='en');
-  document.getElementById('hiScoreWrap').innerHTML = `${t('best')} <span id="hiScoreDisplay">${calcHiScore()}</span>`;
   updateSpeedBoxes();
-  // Update walls buttons text
   document.getElementById('wallsOn').textContent = t('yes');
   document.getElementById('wallsOff').textContent = t('no');
   if (rankingOpen) renderRanking(rankingLevel);
@@ -345,7 +342,7 @@ let score=0, timer=0, timerInterval, startTime;
 let running=false, paused=false, gameOver=false;
 let walls=true, speed=5;
 let pendingScore=0, pendingTime=0, pendingSpeed=5;
-let rankingOpen=false, rankingLevel=5;
+let rankingOpen=false, rankingLevel=5, rankingFromMenu=false;
 
 // ──────────────────────────────────────────────────────
 // RANKING DATA (localStorage, JSON)
@@ -572,8 +569,8 @@ function saveScore(){
 // ──────────────────────────────────────────────────────
 // RANKING
 // ──────────────────────────────────────────────────────
-function openRanking(lvl){
-  rankingOpen=true; rankingLevel=lvl||speed;
+function openRanking(lvl, fromMenu=false){
+  rankingOpen=true; rankingLevel=lvl||speed; rankingFromMenu=fromMenu;
   buildLevelTabs(); renderRanking(rankingLevel);
   showOnly('rankingScreen');
 }
@@ -600,12 +597,12 @@ function renderRanking(lvl){
     html+=`<div class="no-scores">${t('no_scores')}</div>`;
   } else {
     html+=`<table class="ranking-table"><tr>
-      <th>#</th><th>${t('player')}</th><th>${t('score_col')}</th><th>${t('time_col')}</th><th>${t('date_col')}</th>
+      <th>#</th><th>${t('player')}</th><th>${t('score_col')}</th><th>${t('date_col')}</th>
     </tr>`;
     data.forEach((e,i)=>{
       const cls=i===0?'gold':i===1?'silver':i===2?'bronze':'';
       const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
-      html+=`<tr class="${cls}"><td class="rank-num">${medal}</td><td>${e.name}</td><td>${e.score}</td><td>${fmtTime(e.time)}</td><td>${e.date||'-'}</td></tr>`;
+      html+=`<tr class="${cls}"><td class="rank-num">${medal}</td><td>${e.name}</td><td>${e.score}</td><td>${e.date||'-'}</td></tr>`;
     });
     html+='</table>';
   }
@@ -628,11 +625,11 @@ document.getElementById('restartBtn').addEventListener('click',startGame);
 document.getElementById('menuFromGameOverBtn').addEventListener('click',()=>showOnly('startScreen'));
 document.getElementById('saveNameBtn').addEventListener('click',saveScore);
 document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveScore();});
-document.getElementById('rankingBtn').addEventListener('click',()=>openRanking(speed));
-document.getElementById('rankingFromGameOverBtn').addEventListener('click',()=>openRanking(pendingSpeed));
+document.getElementById('rankingBtn').addEventListener('click',()=>openRanking(speed, true));
+document.getElementById('rankingFromGameOverBtn').addEventListener('click',()=>openRanking(pendingSpeed, false));
 document.getElementById('closeRankingBtn').addEventListener('click',()=>{
   rankingOpen=false;
-  if(!running&&!gameOver) showOnly('startScreen');
+  if(rankingFromMenu) showOnly('startScreen');
   else if(gameOver) showOnly('gameOverScreen');
   else showOnly(null);
 });
