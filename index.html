@@ -1095,7 +1095,12 @@
   const DPAD_MAP = { UP: { x: 0, y: -1 }, DOWN: { x: 0, y: 1 }, LEFT: { x: -1, y: 0 }, RIGHT: { x: 1, y: 0 } };
 
   document.querySelectorAll('.dpad-btn').forEach(btn => {
-    btn.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
+    // touchstart: prevenimos scroll Y movemos la serpiente en el mismo gesto
+    btn.addEventListener('touchstart', e => {
+      e.preventDefault();
+      changeDir(DPAD_MAP[btn.dataset.dir]);
+    }, { passive: false });
+    // click: mantiene compatibilidad con ratón / teclado de accesibilidad
     btn.addEventListener('click', () => changeDir(DPAD_MAP[btn.dataset.dir]));
   });
 
