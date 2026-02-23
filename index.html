@@ -9,28 +9,28 @@
     rel="stylesheet"
   />
   <style>
-    /* ── Variables ── */
+    /* variables */
     :root {
-      --bg:       #0d0d0d;
-      --surface:  #111116;
-      --border:   #1e1e2e;
-      --accent:   #00ff88;
-      --danger:   #ff3355;
-      --yellow:   #ffd700;
-      --text:     #aaaacc;
-      --bright:   #eeeeff;
+      --bg:         #0d0d0d;
+      --surface:    #111116;
+      --border:     #1e1e2e;
+      --accent:     #00ff88;
+      --danger:     #ff3355;
+      --yellow:     #ffd700;
+      --text:       #aaaacc;
+      --bright:     #eeeeff;
       --font-pixel: 'Press Start 2P', monospace;
       --font-ui:    'Rajdhani', sans-serif;
     }
 
-    /* ── Reset ── */
+    /* reset */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* ── Base ── */
+    /* base */
     body {
       background: var(--bg);
       color: var(--text);
@@ -46,7 +46,6 @@
       -webkit-user-select: none;
     }
 
-    /* Sutil degradado verde en la parte superior */
     body::before {
       content: '';
       position: fixed;
@@ -64,7 +63,7 @@
       gap: 10px;
     }
 
-    /* ── Header ── */
+    /* header */
     .header {
       width: 100%;
       display: grid;
@@ -104,22 +103,16 @@
       transition: all 0.15s;
     }
 
-    .btn-pause:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-pause.hidden { visibility: hidden; pointer-events: none; }
+    .btn-pause:hover          { border-color: var(--accent); color: var(--accent); }
+    .btn-pause.hidden         { visibility: hidden; pointer-events: none; }
 
     .header-stats {
       display: flex;
       justify-content: flex-end;
     }
 
-    .stat-row {
-      display: flex;
-      gap: 14px;
-    }
-
-    .stat {
-      text-align: right;
-    }
+    .stat-row  { display: flex; gap: 14px; }
+    .stat      { text-align: right; }
 
     .stat-label {
       display: block;
@@ -136,7 +129,7 @@
       color: var(--bright);
     }
 
-    /* ── Tablero ── */
+    /* tablero */
     .canvas-wrap {
       position: relative;
       width: 100%;
@@ -147,7 +140,7 @@
       overflow: hidden;
     }
 
-    /* Cuadrícula visible */
+    /* cuadrícula */
     .canvas-wrap::before {
       content: '';
       position: absolute;
@@ -168,7 +161,7 @@
       touch-action: none;
     }
 
-    /* ── Overlays (pantallas) ── */
+    /* overlays */
     .overlay {
       position: absolute;
       inset: 0;
@@ -205,11 +198,8 @@
     .ov-title.danger { color: var(--danger); text-shadow: 0 0 18px rgba(255, 51, 85, 0.6); }
     .ov-title.yellow { color: var(--yellow); text-shadow: 0 0 18px rgba(255, 215, 0, 0.5); }
 
-    /* ── Selector de idioma ── */
-    .lang-row {
-      display: flex;
-      gap: 8px;
-    }
+    /* idioma */
+    .lang-row { display: flex; gap: 8px; }
 
     .lang-btn {
       font-family: var(--font-pixel);
@@ -226,7 +216,7 @@
 
     .lang-btn.active { border-color: var(--accent); color: var(--accent); }
 
-    /* ── Selector de velocidad (10 cuadros) ── */
+    /* velocidad */
     .speed-selector {
       display: flex;
       flex-direction: column;
@@ -242,10 +232,7 @@
       letter-spacing: 0.1em;
     }
 
-    .speed-boxes {
-      display: flex;
-      gap: 5px;
-    }
+    .speed-boxes { display: flex; gap: 5px; }
 
     .speed-box {
       width: clamp(18px, 4.2vw, 25px);
@@ -257,10 +244,10 @@
       transition: background 0.15s;
     }
 
-    .speed-box.active          { background: var(--accent); }
+    .speed-box.active             { background: var(--accent); }
     .speed-box:hover:not(.active) { background: #2a2a3a; }
 
-    /* ── Toggle bordes ── */
+    /* bordes */
     .option-row {
       display: flex;
       align-items: center;
@@ -295,7 +282,7 @@
 
     .two-btn button.on { background: var(--accent); color: #000; }
 
-    /* ── Botones genéricos ── */
+    /* botones */
     .btn {
       font-family: var(--font-pixel);
       font-size: clamp(0.37rem, 1.8vw, 0.53rem);
@@ -311,14 +298,14 @@
       transition: all 0.15s;
     }
 
-    .btn:hover              { background: var(--accent); color: #000; }
-    .btn.sm                 { font-size: 0.34rem; padding: 8px 14px; min-width: 110px; }
-    .btn.danger             { border-color: var(--danger); color: var(--danger); }
-    .btn.danger:hover       { background: var(--danger); color: #fff; }
-    .btn.yellow             { border-color: var(--yellow); color: var(--yellow); }
-    .btn.yellow:hover       { background: var(--yellow); color: #000; }
+    .btn:hover        { background: var(--accent); color: #000; }
+    .btn.sm           { font-size: 0.34rem; padding: 8px 14px; min-width: 110px; }
+    .btn.danger       { border-color: var(--danger); color: var(--danger); }
+    .btn.danger:hover { background: var(--danger); color: #fff; }
+    .btn.yellow       { border-color: var(--yellow); color: var(--yellow); }
+    .btn.yellow:hover { background: var(--yellow); color: #000; }
 
-    /* ── Puntuación final / pausa ── */
+    /* puntuación / pausa */
     .final-score {
       font-family: var(--font-pixel);
       font-size: clamp(0.42rem, 2vw, 0.6rem);
@@ -327,7 +314,7 @@
       line-height: 2.2;
     }
 
-    /* ── Input de nombre (ranking) ── */
+    /* input nombre */
     .name-wrap {
       display: flex;
       flex-direction: column;
@@ -359,7 +346,7 @@
       outline: none;
     }
 
-    /* ── Tabla de ranking ── */
+    /* ranking */
     .ranking-wrap { width: 100%; max-width: 420px; }
 
     .ranking-title {
@@ -398,10 +385,10 @@
     .ranking-table tr.silver td { color: #bbb; }
     .ranking-table tr.bronze td { color: #cd7f32; }
 
-    .rank-num   { color: #444; min-width: 22px; }
-    .no-scores  { font-family: var(--font-pixel); font-size: 0.35rem; color: #333; text-align: center; padding: 18px; }
+    .rank-num  { color: #444; min-width: 22px; }
+    .no-scores { font-family: var(--font-pixel); font-size: 0.35rem; color: #333; text-align: center; padding: 18px; }
 
-    /* ── Tabs de nivel (ranking) ── */
+    /* tabs nivel */
     .level-tabs {
       display: flex;
       flex-wrap: wrap;
@@ -425,7 +412,7 @@
 
     .level-tab.active { border-color: var(--yellow); color: var(--yellow); }
 
-    /* ── D-pad (táctil) ── */
+    /* dpad */
     .dpad {
       display: none;
       grid-template-areas:
@@ -438,7 +425,6 @@
       margin-top: 6px;
     }
 
-    /* Solo visible en pantallas táctiles */
     @media (pointer: coarse) { .dpad { display: grid; } }
 
     .dpad-btn {
@@ -496,7 +482,7 @@
     <div class="overlay" id="startScreen">
       <div class="lang-row">
         <button class="lang-btn active" id="langES">🇪🇸 ES</button>
-        <button class="lang-btn" id="langEN">🇬🇧 EN</button>
+        <button class="lang-btn"        id="langEN">🇬🇧 EN</button>
       </div>
 
       <div class="ov-title">🐍 SNAKE</div>
@@ -510,11 +496,11 @@
         <span class="opt-label" data-i18n="walls_lbl">BORDES</span>
         <div class="two-btn">
           <button id="wallsOn"  class="on" data-i18n="yes">SÍ</button>
-          <button id="wallsOff" data-i18n="no">NO</button>
+          <button id="wallsOff"            data-i18n="no">NO</button>
         </div>
       </div>
 
-      <button class="btn" id="startBtn" data-i18n="start">▶ COMENZAR</button>
+      <button class="btn"        id="startBtn"   data-i18n="start">▶ COMENZAR</button>
       <button class="btn yellow sm" id="rankingBtn" data-i18n="ranking_btn">🏆 RANKING</button>
     </div>
 
@@ -522,11 +508,11 @@
     <div class="overlay hidden" id="pauseScreen">
       <div class="ov-title yellow" data-i18n="paused">⏸ PAUSA</div>
       <div class="final-score" id="pauseInfo"></div>
-      <button class="btn" id="resumeBtn" data-i18n="resume">▶ CONTINUAR</button>
+      <button class="btn"    id="resumeBtn"        data-i18n="resume">▶ CONTINUAR</button>
       <button class="btn sm" id="menuFromPauseBtn" data-i18n="main_menu">MENÚ PRINCIPAL</button>
     </div>
 
-    <!-- Guardar nombre (top 10) -->
+    <!-- Top 10 — guardar nombre -->
     <div class="overlay hidden" id="nameScreen">
       <div class="ov-title yellow" data-i18n="top10_title">🏆 TOP 10</div>
       <div class="name-wrap">
@@ -540,8 +526,8 @@
     <div class="overlay hidden" id="gameOverScreen">
       <div class="ov-title danger" data-i18n="game_over">GAME OVER</div>
       <div class="final-score" id="finalScore"></div>
-      <button class="btn" id="restartBtn" data-i18n="play_again">▶ JUGAR DE NUEVO</button>
-      <button class="btn sm" id="menuFromGameOverBtn" data-i18n="main_menu">MENÚ PRINCIPAL</button>
+      <button class="btn"        id="restartBtn"           data-i18n="play_again">▶ JUGAR DE NUEVO</button>
+      <button class="btn sm"     id="menuFromGameOverBtn"  data-i18n="main_menu">MENÚ PRINCIPAL</button>
       <button class="btn yellow sm" id="rankingFromGameOverBtn" data-i18n="ranking_btn">🏆 RANKING</button>
     </div>
 
@@ -554,7 +540,7 @@
     </div>
   </div>
 
-  <!-- D-pad (solo en táctil) -->
+  <!-- ── D-pad (solo táctil) ── -->
   <div class="dpad">
     <button class="dpad-btn dpad-up"    data-dir="UP">▲</button>
     <button class="dpad-btn dpad-left"  data-dir="LEFT">◀</button>
@@ -565,32 +551,30 @@
 </div><!-- /wrapper -->
 
 <script>
-  // ─────────────────────────────────────────────────────────
-  // INTERNACIONALIZACIÓN
-  // ─────────────────────────────────────────────────────────
+  // == i18n ==
 
   const LANGS = {
     es: {
-      score: 'PUNTOS',  time: 'TIEMPO',   speed_lbl: 'VELOCIDAD', walls_lbl: 'BORDES',
-      yes: 'SÍ',        no: 'NO',         start: '▶ COMENZAR',    ranking_btn: '🏆 RANKING',
-      ranking_title: '🏆 RANKING',        paused: '⏸ PAUSA',      resume: '▶ CONTINUAR',
-      main_menu: 'MENÚ PRINCIPAL',        game_over: 'GAME OVER', play_again: '▶ JUGAR DE NUEVO',
-      close: '✕ CERRAR',                  top10_title: '🏆 TOP 10',
+      score: 'PUNTOS',  time: 'TIEMPO',    speed_lbl: 'VELOCIDAD',  walls_lbl: 'BORDES',
+      yes: 'SÍ',        no: 'NO',          start: '▶ COMENZAR',     ranking_btn: '🏆 RANKING',
+      ranking_title: '🏆 RANKING',         paused: '⏸ PAUSA',       resume: '▶ CONTINUAR',
+      main_menu: 'MENÚ PRINCIPAL',         game_over: 'GAME OVER',  play_again: '▶ JUGAR DE NUEVO',
+      close: '✕ CERRAR',                   top10_title: '🏆 TOP 10',
       name_prompt: '¡Entraste al ranking!\nIntroduce tu nombre:',
-      save: '💾 GUARDAR',   level: 'NIVEL',  player: 'JUGADOR',
-      score_col: 'PTS',     date_col: 'FECHA',  no_scores: 'Sin puntuaciones aún.',
-      score_label: 'PUNTOS', time_label: 'TIEMPO', name_placeholder: 'NOMBRE',
+      save: '💾 GUARDAR',  level: 'NIVEL',  player: 'JUGADOR',
+      score_col: 'PTS',    date_col: 'FECHA',  no_scores: 'Sin puntuaciones aún.',
+      score_label: 'PUNTOS',  time_label: 'TIEMPO',  name_placeholder: 'NOMBRE',
     },
     en: {
-      score: 'SCORE',   time: 'TIME',     speed_lbl: 'SPEED',     walls_lbl: 'WALLS',
-      yes: 'YES',       no: 'NO',         start: '▶ START',       ranking_btn: '🏆 RANKING',
-      ranking_title: '🏆 RANKING',        paused: '⏸ PAUSED',     resume: '▶ RESUME',
-      main_menu: 'MAIN MENU',             game_over: 'GAME OVER', play_again: '▶ PLAY AGAIN',
-      close: '✕ CLOSE',                   top10_title: '🏆 TOP 10',
+      score: 'SCORE',   time: 'TIME',      speed_lbl: 'SPEED',      walls_lbl: 'WALLS',
+      yes: 'YES',       no: 'NO',          start: '▶ START',        ranking_btn: '🏆 RANKING',
+      ranking_title: '🏆 RANKING',         paused: '⏸ PAUSED',      resume: '▶ RESUME',
+      main_menu: 'MAIN MENU',              game_over: 'GAME OVER',  play_again: '▶ PLAY AGAIN',
+      close: '✕ CLOSE',                    top10_title: '🏆 TOP 10',
       name_prompt: "You made the ranking!\nEnter your name:",
-      save: '💾 SAVE',      level: 'LEVEL',  player: 'PLAYER',
-      score_col: 'PTS',     date_col: 'DATE',   no_scores: 'No scores yet.',
-      score_label: 'SCORE', time_label: 'TIME', name_placeholder: 'NAME',
+      save: '💾 SAVE',     level: 'LEVEL',  player: 'PLAYER',
+      score_col: 'PTS',    date_col: 'DATE',   no_scores: 'No scores yet.',
+      score_label: 'SCORE',   time_label: 'TIME',  name_placeholder: 'NAME',
     },
   };
 
@@ -614,9 +598,7 @@
   document.getElementById('langEN').addEventListener('click', () => { lang = 'en'; applyLang(); });
 
 
-  // ─────────────────────────────────────────────────────────
-  // CANVAS
-  // ─────────────────────────────────────────────────────────
+  // == canvas ==
 
   const canvas = document.getElementById('gameCanvas');
   const ctx    = canvas.getContext('2d');
@@ -624,34 +606,27 @@
   let CELL;
 
   function resizeCanvas() {
-    const size  = canvas.parentElement.clientWidth;
-    canvas.width = canvas.height = size;
-    CELL = Math.floor(size / GRID);
+    const size    = canvas.parentElement.clientWidth;
+    canvas.width  = size;
+    canvas.height = size;
+    CELL          = Math.floor(size / GRID);
   }
 
-  resizeCanvas();
   window.addEventListener('resize', () => { resizeCanvas(); if (!running) drawFrame(); });
 
 
-  // ─────────────────────────────────────────────────────────
-  // ESTADO DEL JUEGO
-  // ─────────────────────────────────────────────────────────
+  // == estado ==
 
   let snake, dir, nextDir, food;
   let score = 0, timer = 0, timerInterval, startTime;
   let running = false, paused = false, gameOver = false;
   let walls = true, speed = 5;
 
-  // Datos temporales para guardar en ranking tras game over
   let pendingScore = 0, pendingTime = 0, pendingSpeed = 5;
-
-  // Control de la pantalla de ranking
   let rankingOpen = false, rankingLevel = 5, rankingFromMenu = false;
 
 
-  // ─────────────────────────────────────────────────────────
-  // RANKING (localStorage — JSON por nivel)
-  // ─────────────────────────────────────────────────────────
+  // == ranking — localStorage ==
 
   const rankingKey = lvl => `snakeRanking_lvl${lvl}`;
 
@@ -683,15 +658,13 @@
   }
 
 
-  // ─────────────────────────────────────────────────────────
-  // SELECTOR DE VELOCIDAD
-  // ─────────────────────────────────────────────────────────
+  // == velocidad ==
 
   function buildSpeedBoxes() {
     const container = document.getElementById('speedBoxes');
     container.innerHTML = '';
     for (let i = 1; i <= 10; i++) {
-      const box = document.createElement('button');
+      const box     = document.createElement('button');
       box.className = 'speed-box' + (i === speed ? ' active' : '');
       box.addEventListener('click', () => { speed = i; updateSpeedBoxes(); });
       container.appendChild(box);
@@ -706,7 +679,7 @@
 
   buildSpeedBoxes();
 
-  // Toggle bordes
+  // toggle bordes
   document.getElementById('wallsOn').addEventListener('click', () => {
     walls = true;
     document.getElementById('wallsOn').classList.add('on');
@@ -722,22 +695,19 @@
   });
 
 
-  // ─────────────────────────────────────────────────────────
-  // LÓGICA DEL JUEGO
-  // ─────────────────────────────────────────────────────────
+  // == lógica ==
 
-  // Milisegundos entre ticks según nivel (1 = lento, 10 = rápido)
   const speedToMs = s => Math.round(540 / (s * 0.88 + 0.4));
 
   function initGame() {
-    const mid = Math.floor(GRID / 2);
-    snake   = [{ x: mid, y: mid }, { x: mid - 1, y: mid }, { x: mid - 2, y: mid }];
-    dir     = { x: 1, y: 0 };
-    nextDir = { x: 1, y: 0 };
-    score   = 0;
-    timer   = 0;
-    gameOver = false;
-    paused   = false;
+    const mid   = Math.floor(GRID / 2);
+    snake       = [{ x: mid, y: mid }, { x: mid - 1, y: mid }, { x: mid - 2, y: mid }];
+    dir         = { x: 1, y: 0 };
+    nextDir     = { x: 1, y: 0 };
+    score       = 0;
+    timer       = 0;
+    gameOver    = false;
+    paused      = false;
     dirQueue.length = 0;
     document.getElementById('scoreDisplay').textContent = '0';
     document.getElementById('timeDisplay').textContent  = '0:00';
@@ -755,18 +725,18 @@
 
   function startTimer() {
     clearInterval(timerInterval);
-    startTime = Date.now();
+    startTime     = Date.now();
     timerInterval = setInterval(() => {
       if (!paused && running && !gameOver) {
-        timer = Math.floor((Date.now() - startTime) / 1000);
-        const m = Math.floor(timer / 60);
-        const s = timer % 60;
+        timer      = Math.floor((Date.now() - startTime) / 1000);
+        const m    = Math.floor(timer / 60);
+        const s    = timer % 60;
         document.getElementById('timeDisplay').textContent = `${m}:${s.toString().padStart(2, '0')}`;
       }
     }, 500);
   }
 
-  // Game loop
+  // game loop
   let lastTick = 0, animFrame;
 
   function gameLoop(ts) {
@@ -778,8 +748,10 @@
   }
 
   function tick() {
-    consumeDir();        // aplica el siguiente giro de la cola (si hay)
-    dir = { ...nextDir };
+    // saca el siguiente giro de la cola si hay
+    if (dirQueue.length > 0) nextDir = dirQueue.shift();
+
+    dir        = { ...nextDir };
     const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
     if (walls) {
@@ -805,14 +777,11 @@
   }
 
 
-  // ─────────────────────────────────────────────────────────
-  // RENDER
-  // ─────────────────────────────────────────────────────────
+  // == render ==
 
   function drawFrame() {
     ctx.fillStyle = '#0d0d0d';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     drawFood();
     drawSnake();
     drawBorder();
@@ -820,29 +789,26 @@
 
   function drawBorder() {
     const W = canvas.width;
-    const t = 3; // grosor en px
+    const t = 3;
 
+    ctx.save();
     if (walls) {
-      // Borde rojo con glow — indica que tocar = muerte
-      ctx.save();
+      // rojo: matas si tocas
       ctx.shadowColor = 'rgba(255, 51, 85, 0.8)';
       ctx.shadowBlur  = 16;
       ctx.strokeStyle = '#ff3355';
       ctx.lineWidth   = t;
       ctx.strokeRect(t / 2, t / 2, W - t, W - t);
-      // Segunda pasada sin blur para trazo nítido encima del glow
       ctx.shadowBlur  = 0;
       ctx.globalAlpha = 0.6;
       ctx.strokeRect(t / 2, t / 2, W - t, W - t);
-      ctx.restore();
     } else {
-      // Borde muy sutil verde — sin límites, el tablero es abierto
-      ctx.save();
+      // verde suave: sin límites
       ctx.strokeStyle = 'rgba(0, 255, 136, 0.12)';
       ctx.lineWidth   = 1;
       ctx.strokeRect(0.5, 0.5, W - 1, W - 1);
-      ctx.restore();
     }
+    ctx.restore();
   }
 
   function drawFood() {
@@ -850,7 +816,6 @@
     const fy = food.y * CELL + CELL / 2;
     const fr = CELL * 0.38;
 
-    // Halo rojo
     const glow = ctx.createRadialGradient(fx, fy, 0, fx, fy, fr * 2.8);
     glow.addColorStop(0, 'rgba(255, 51, 85, 0.3)');
     glow.addColorStop(1, 'transparent');
@@ -859,13 +824,11 @@
     ctx.arc(fx, fy, fr * 2.8, 0, Math.PI * 2);
     ctx.fill();
 
-    // Círculo principal
     ctx.fillStyle = '#ff3355';
     ctx.beginPath();
     ctx.arc(fx, fy, fr, 0, Math.PI * 2);
     ctx.fill();
 
-    // Brillo
     ctx.fillStyle = 'rgba(255, 160, 160, 0.55)';
     ctx.beginPath();
     ctx.arc(fx - fr * 0.3, fy - fr * 0.3, fr * 0.3, 0, Math.PI * 2);
@@ -880,7 +843,6 @@
       const pad    = 1.5;
 
       if (isHead) {
-        // Halo verde alrededor de la cabeza
         const glow = ctx.createRadialGradient(x + CELL / 2, y + CELL / 2, 0, x + CELL / 2, y + CELL / 2, CELL * 1.2);
         glow.addColorStop(0, 'rgba(0, 255, 136, 0.2)');
         glow.addColorStop(1, 'transparent');
@@ -888,7 +850,7 @@
         ctx.fillRect(x - CELL * 0.5, y - CELL * 0.5, CELL * 2, CELL * 2);
         ctx.fillStyle = '#00ff88';
       } else {
-        const alpha = Math.max(0.22, 1 - (i / snake.length) * 0.78);
+        const alpha   = Math.max(0.22, 1 - (i / snake.length) * 0.78);
         ctx.fillStyle = `rgba(0, ${Math.round(140 + 115 * alpha)}, ${Math.round(70 * alpha)}, ${alpha})`;
       }
 
@@ -911,14 +873,12 @@
       e2x = x + CELL * 0.7;  e2y = e1y;
     }
 
-    // Pupilas
     ctx.fillStyle = '#001a0d';
     ctx.beginPath();
     ctx.arc(e1x, e1y, eyeSize, 0, Math.PI * 2);
     ctx.arc(e2x, e2y, eyeSize, 0, Math.PI * 2);
     ctx.fill();
 
-    // Brillos
     ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
     ctx.beginPath();
     ctx.arc(e1x - eyeSize * 0.35, e1y - eyeSize * 0.35, eyeSize * 0.38, 0, Math.PI * 2);
@@ -931,24 +891,20 @@
   function roundedRect(c, x, y, w, h, r) {
     c.beginPath();
     c.moveTo(x + r, y);
-    c.lineTo(x + w - r, y);  c.arcTo(x + w, y,     x + w, y + r,     r);
-    c.lineTo(x + w, y + h - r);  c.arcTo(x + w, y + h, x + w - r, y + h, r);
-    c.lineTo(x + r, y + h);  c.arcTo(x,     y + h, x,     y + h - r, r);
-    c.lineTo(x, y + r);      c.arcTo(x,     y,     x + r, y,         r);
+    c.lineTo(x + w - r, y);     c.arcTo(x + w, y,     x + w, y + r,     r);
+    c.lineTo(x + w, y + h - r); c.arcTo(x + w, y + h, x + w - r, y + h, r);
+    c.lineTo(x + r, y + h);     c.arcTo(x,     y + h, x,     y + h - r, r);
+    c.lineTo(x, y + r);         c.arcTo(x,     y,     x + r, y,         r);
     c.closePath();
   }
 
 
-  // ─────────────────────────────────────────────────────────
-  // GESTIÓN DE PANTALLAS
-  // ─────────────────────────────────────────────────────────
+  // == pantallas ==
 
   const SCREENS = ['startScreen', 'pauseScreen', 'nameScreen', 'gameOverScreen', 'rankingScreen'];
 
   function showOnly(id) {
-    SCREENS.forEach(s => {
-      document.getElementById(s).classList.toggle('hidden', s !== id);
-    });
+    SCREENS.forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id));
     if (!id) SCREENS.forEach(s => document.getElementById(s).classList.add('hidden'));
   }
 
@@ -1022,9 +978,7 @@
   }
 
 
-  // ─────────────────────────────────────────────────────────
-  // RANKING (pantalla)
-  // ─────────────────────────────────────────────────────────
+  // == ranking — pantalla ==
 
   function openRanking(lvl, fromMenu = false) {
     rankingOpen     = true;
@@ -1039,8 +993,8 @@
     const container = document.getElementById('levelTabs');
     container.innerHTML = '';
     for (let i = 1; i <= 10; i++) {
-      const btn = document.createElement('button');
-      btn.className   = 'level-tab' + (i === rankingLevel ? ' active' : '');
+      const btn     = document.createElement('button');
+      btn.className = 'level-tab' + (i === rankingLevel ? ' active' : '');
       btn.textContent = `${t('level')} ${i}`;
       btn.addEventListener('click', () => {
         rankingLevel = i;
@@ -1078,9 +1032,7 @@
   }
 
 
-  // ─────────────────────────────────────────────────────────
-  // EVENTOS DE BOTONES
-  // ─────────────────────────────────────────────────────────
+  // == botones ==
 
   document.getElementById('startBtn').addEventListener('click', startGame);
   document.getElementById('btnPause').addEventListener('click', togglePause);
@@ -1100,32 +1052,20 @@
   });
 
 
-  // ─────────────────────────────────────────────────────────
-  // CONTROLES
-  // ─────────────────────────────────────────────────────────
+  // == controles ==
 
-  // Cola de hasta 2 giros para no perder inputs rápidos
+  // buffer de 2: no se pierden giros rápidos
   const dirQueue = [];
 
   function changeDir(d) {
     if (!running || paused || gameOver) return;
-
-    // Referencia para validar: el último giro encolado, o la dirección actual
     const ref = dirQueue.length > 0 ? dirQueue[dirQueue.length - 1] : dir;
-
-    // Ignoramos si es la dirección contraria a la referencia o ya está encolada
-    if (d.x === -ref.x && d.y === -ref.y) return;
-    if (d.x === ref.x  && d.y === ref.y)  return;
-
+    if (d.x === -ref.x && d.y === -ref.y) return; // 180° no
+    if (d.x ===  ref.x && d.y ===  ref.y) return; // ya va en esa dirección
     if (dirQueue.length < 2) dirQueue.push(d);
   }
 
-  function consumeDir() {
-    // Llamado en cada tick del juego para aplicar el siguiente giro encolado
-    if (dirQueue.length > 0) nextDir = dirQueue.shift();
-  }
-
-  // Teclado
+  // teclado
   const KEY_MAP = {
     ArrowUp:    { x: 0, y: -1 }, w: { x: 0, y: -1 }, W: { x: 0, y: -1 },
     ArrowDown:  { x: 0, y:  1 }, s: { x: 0, y:  1 }, S: { x: 0, y:  1 },
@@ -1139,10 +1079,10 @@
     if (d) { changeDir(d); e.preventDefault(); }
   });
 
-  // D-pad
+  // dpad
   const DPAD_MAP = { UP: { x: 0, y: -1 }, DOWN: { x: 0, y: 1 }, LEFT: { x: -1, y: 0 }, RIGHT: { x: 1, y: 0 } };
 
-  // Flag: el toque actual empezó en el D-pad → el swipe global lo ignora
+  // si el toque viene del dpad, el swipe no hace nada
   let dpadTouched = false;
 
   document.querySelectorAll('.dpad-btn').forEach(btn => {
@@ -1152,14 +1092,12 @@
       changeDir(DPAD_MAP[btn.dataset.dir]);
     }, { passive: false });
     btn.addEventListener('touchend', () => {
-      // Pequeño delay para que el swipe global vea el flag antes de evaluarse
       setTimeout(() => { dpadTouched = false; }, 50);
     }, { passive: true });
-    // click: compatibilidad con ratón / teclado de accesibilidad
     btn.addEventListener('click', () => changeDir(DPAD_MAP[btn.dataset.dir]));
   });
 
-  // Swipe sobre el canvas — ignorado si el toque arrancó desde el D-pad
+  // swipe
   let touchStartX = 0, touchStartY = 0;
 
   document.body.addEventListener('touchmove', e => {
@@ -1176,7 +1114,7 @@
     if (dpadTouched) return;
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return; // umbral algo mayor
+    if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
     const d = Math.abs(dx) > Math.abs(dy)
       ? (dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 })
       : (dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 });
@@ -1184,9 +1122,7 @@
   }, { passive: true });
 
 
-  // ─────────────────────────────────────────────────────────
-  // INIT
-  // ─────────────────────────────────────────────────────────
+  // == init ==
 
   resizeCanvas();
   drawFrame();
