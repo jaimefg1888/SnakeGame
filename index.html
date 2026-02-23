@@ -738,6 +738,7 @@
     timer   = 0;
     gameOver = false;
     paused   = false;
+    dirQueue.length = 0;
     document.getElementById('scoreDisplay').textContent = '0';
     document.getElementById('timeDisplay').textContent  = '0:00';
     spawnFood();
@@ -777,6 +778,7 @@
   }
 
   function tick() {
+    consumeDir();        // aplica el siguiente giro de la cola (si hay)
     dir = { ...nextDir };
     const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
 
@@ -1102,11 +1104,25 @@
   // CONTROLES
   // ─────────────────────────────────────────────────────────
 
+  // Cola de hasta 2 giros para no perder inputs rápidos
+  const dirQueue = [];
+
   function changeDir(d) {
     if (!running || paused || gameOver) return;
-    // Comparamos contra nextDir (no dir) para evitar que dos pulsaciones
-    // rápidas entre ticks introduzcan la dirección contraria al giro encolado
-    if (d.x !== -nextDir.x || d.y !== -nextDir.y) nextDir = d;
+
+    // Referencia para validar: el último giro encolado, o la dirección actual
+    const ref = dirQueue.length > 0 ? dirQueue[dirQueue.length - 1] : dir;
+
+    // Ignoramos si es la dirección contraria a la referencia o ya está encolada
+    if (d.x === -ref.x && d.y === -ref.y) return;
+    if (d.x === ref.x  && d.y === ref.y)  return;
+
+    if (dirQueue.length < 2) dirQueue.push(d);
+  }
+
+  function consumeDir() {
+    // Llamado en cada tick del juego para aplicar el siguiente giro encolado
+    if (dirQueue.length > 0) nextDir = dirQueue.shift();
   }
 
   // Teclado
@@ -1126,20 +1142,24 @@
   // D-pad
   const DPAD_MAP = { UP: { x: 0, y: -1 }, DOWN: { x: 0, y: 1 }, LEFT: { x: -1, y: 0 }, RIGHT: { x: 1, y: 0 } };
 
+  // Flag: el toque actual empezó en el D-pad → el swipe global lo ignora
+  let dpadTouched = false;
+
   document.querySelectorAll('.dpad-btn').forEach(btn => {
     btn.addEventListener('touchstart', e => {
       e.preventDefault();
-      e.stopPropagation(); // evita que el swipe global capture este toque
+      dpadTouched = true;
       changeDir(DPAD_MAP[btn.dataset.dir]);
     }, { passive: false });
-    btn.addEventListener('touchend', e => {
-      e.stopPropagation(); // evita que touchend global calcule un swipe falso
+    btn.addEventListener('touchend', () => {
+      // Pequeño delay para que el swipe global vea el flag antes de evaluarse
+      setTimeout(() => { dpadTouched = false; }, 50);
     }, { passive: true });
     // click: compatibilidad con ratón / teclado de accesibilidad
     btn.addEventListener('click', () => changeDir(DPAD_MAP[btn.dataset.dir]));
   });
 
-  // Swipe sobre el canvas (solo si el toque no viene del D-pad)
+  // Swipe sobre el canvas — ignorado si el toque arrancó desde el D-pad
   let touchStartX = 0, touchStartY = 0;
 
   document.body.addEventListener('touchmove', e => {
@@ -1147,14 +1167,16 @@
   }, { passive: false });
 
   document.addEventListener('touchstart', e => {
+    if (dpadTouched) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
   document.addEventListener('touchend', e => {
+    if (dpadTouched) return;
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) < 15 && Math.abs(dy) < 15) return;
+    if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return; // umbral algo mayor
     const d = Math.abs(dx) > Math.abs(dy)
       ? (dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 })
       : (dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 });
