@@ -18,6 +18,7 @@
     min-height:100vh; display:flex; flex-direction:column;
     align-items:center; justify-content:flex-start;
     padding:12px 12px 28px; user-select:none; -webkit-user-select:none; overflow-x:hidden;
+    touch-action:none; overflow:hidden;
   }
   body::before{
     content:''; position:fixed; inset:0;
@@ -57,7 +58,7 @@
     background-image:linear-gradient(rgba(0,255,136,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.07) 1px,transparent 1px);
     background-size:calc(100%/20) calc(100%/20);pointer-events:none;z-index:1;
   }
-  canvas{display:block;width:100%;height:100%;image-rendering:pixelated;}
+  canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none;}
 
   /* OVERLAYS */
   .overlay{
@@ -164,7 +165,7 @@
   .dpad-btn{
     background:var(--surface);border:1px solid var(--border);color:var(--text);
     font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    border-radius:6px;transition:all .1s;-webkit-tap-highlight-color:transparent;
+    border-radius:6px;transition:all .1s;-webkit-tap-highlight-color:transparent;touch-action:none;
   }
   .dpad-btn:active{background:#1e1e2e;color:var(--accent);border-color:var(--accent);}
   .dpad-up{grid-area:up;} .dpad-left{grid-area:left;} .dpad-right{grid-area:right;} .dpad-down{grid-area:down;}
@@ -654,6 +655,7 @@ document.addEventListener('keydown',e=>{
 
 const DMAP={UP:{x:0,y:-1},DOWN:{x:0,y:1},LEFT:{x:-1,y:0},RIGHT:{x:1,y:0}};
 document.querySelectorAll('.dpad-btn').forEach(b=>{
+  b.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});
   b.addEventListener('click',()=>{
     const d=DMAP[b.dataset.dir];
     if(d&&running&&!paused&&!gameOver)
@@ -662,13 +664,19 @@ document.querySelectorAll('.dpad-btn').forEach(b=>{
 });
 
 let tx=0,ty=0;
-canvas.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+// Prevent scroll when touching the game area
+document.body.addEventListener('touchmove',e=>{ if(running&&!paused) e.preventDefault(); },{passive:false});
+canvas.addEventListener('touchstart',e=>{
+  e.preventDefault();
+  tx=e.touches[0].clientX; ty=e.touches[0].clientY;
+},{passive:false});
 canvas.addEventListener('touchend',e=>{
+  e.preventDefault();
   const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
   if(Math.abs(dx)<15&&Math.abs(dy)<15)return;
   let d=Math.abs(dx)>Math.abs(dy)?(dx>0?{x:1,y:0}:{x:-1,y:0}):(dy>0?{x:0,y:1}:{x:0,y:-1});
   if(running&&!paused&&!gameOver) if(d.x!==-(dir.x)||d.y!==-(dir.y)) nextDir=d;
-},{passive:true});
+},{passive:false});
 
 // ──────────────────────────────────────────────────────
 // INIT
