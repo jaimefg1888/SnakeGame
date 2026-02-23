@@ -1104,7 +1104,9 @@
 
   function changeDir(d) {
     if (!running || paused || gameOver) return;
-    if (d.x !== -dir.x || d.y !== -dir.y) nextDir = d;
+    // Comparamos contra nextDir (no dir) para evitar que dos pulsaciones
+    // rápidas entre ticks introduzcan la dirección contraria al giro encolado
+    if (d.x !== -nextDir.x || d.y !== -nextDir.y) nextDir = d;
   }
 
   // Teclado
@@ -1125,16 +1127,19 @@
   const DPAD_MAP = { UP: { x: 0, y: -1 }, DOWN: { x: 0, y: 1 }, LEFT: { x: -1, y: 0 }, RIGHT: { x: 1, y: 0 } };
 
   document.querySelectorAll('.dpad-btn').forEach(btn => {
-    // touchstart: prevenimos scroll Y movemos la serpiente en el mismo gesto
     btn.addEventListener('touchstart', e => {
       e.preventDefault();
+      e.stopPropagation(); // evita que el swipe global capture este toque
       changeDir(DPAD_MAP[btn.dataset.dir]);
     }, { passive: false });
-    // click: mantiene compatibilidad con ratón / teclado de accesibilidad
+    btn.addEventListener('touchend', e => {
+      e.stopPropagation(); // evita que touchend global calcule un swipe falso
+    }, { passive: true });
+    // click: compatibilidad con ratón / teclado de accesibilidad
     btn.addEventListener('click', () => changeDir(DPAD_MAP[btn.dataset.dir]));
   });
 
-  // Swipe (funciona en toda la pantalla)
+  // Swipe sobre el canvas (solo si el toque no viene del D-pad)
   let touchStartX = 0, touchStartY = 0;
 
   document.body.addEventListener('touchmove', e => {
